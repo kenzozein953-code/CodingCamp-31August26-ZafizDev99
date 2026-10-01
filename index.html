@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Expense &amp; Budget Visualizer</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- ========== HEADER ========== -->
+  <header>
+    <div class="header-inner">
+      <div class="header-brand">
+        <h1 class="app-title">Expense &amp; Budget Visualizer</h1>
+        <p class="app-subtitle">Track your spending. Understand your budget.</p>
+      </div>
+      <button id="themeToggle" class="theme-toggle" aria-label="Toggle dark/light mode">
+        🌙 Dark
+      </button>
+    </div>
+  </header>
+
+  <!-- ========== MAIN ========== -->
+  <main>
+    <!-- Notification area -->
+    <div id="notification" class="notification" role="alert" aria-live="polite"></div>
+
+    <div class="dashboard-grid">
+
+      <!-- ===== LEFT COLUMN ===== -->
+      <div class="col-left">
+
+        <!-- Input Form Card -->
+        <section class="card" id="formCard">
+          <h2 class="card-title">Add Expense</h2>
+          <form id="transactionForm" novalidate>
+
+            <div class="form-group">
+              <label for="itemName">Item Name</label>
+              <input
+                type="text"
+                id="itemName"
+                placeholder="e.g. Lunch, Gasoline, Movie"
+                autocomplete="off"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="itemAmount">Amount (IDR)</label>
+              <input
+                type="number"
+                id="itemAmount"
+                placeholder="e.g. 25000"
+                min="0.01"
+                step="any"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="itemCategory">Category</label>
+              <select id="itemCategory" required>
+                <option value="">-- Select Category --</option>
+                <option value="Food">Food</option>
+                <option value="Transport">Transport</option>
+                <option value="Fun">Fun</option>
+              </select>
+            </div>
+
+            <div id="formError" class="form-error" role="alert" aria-live="polite"></div>
+
+            <button type="submit" class="btn-primary btn-full">Add Transaction</button>
+
+          </form>
+        </section>
+
+        <!-- Monthly Summary Card -->
+        <section class="card" id="monthlySummary">
+          <h3 class="card-title">Monthly Summary</h3>
+          <p class="summary-month" id="summaryMonth">—</p>
+          <div class="summary-grid">
+            <div class="summary-item">
+              <span class="summary-label">Total</span>
+              <span class="summary-value" id="summaryTotal">Rp0</span>
+            </div>
+            <div class="summary-item">
+              <span class="summary-label">Transactions</span>
+              <span class="summary-value" id="summaryCount">0</span>
+            </div>
+            <div class="summary-item">
+              <span class="summary-label">Top Category</span>
+              <span class="summary-value" id="summaryTopCategory">—</span>
+            </div>
+            <div class="summary-item">
+              <span class="summary-label">Average</span>
+              <span class="summary-value" id="summaryAverage">Rp0</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Pie Chart Card -->
+        <section class="card" id="chartCard">
+          <h3 class="card-title">Spending by Category</h3>
+          <div class="chart-wrapper">
+            <canvas id="expenseChart" aria-label="Expense distribution pie chart" role="img"></canvas>
+            <div id="chartEmptyState" class="empty-state-chart">
+              Belum ada data pengeluaran.
+            </div>
+          </div>
+        </section>
+
+      </div><!-- /col-left -->
+
+      <!-- ===== RIGHT COLUMN ===== -->
+      <div class="col-right">
+
+        <!-- Total Spending Card -->
+        <section class="card card-total" id="totalSpendingCard">
+          <p class="total-label">Total Spending</p>
+          <p class="total-amount" id="totalAmount">Rp0</p>
+        </section>
+
+        <!-- Transaction List Card -->
+        <section class="card" id="transactionCard">
+          <div class="list-header">
+            <h3 class="card-title">Transactions</h3>
+            <div class="sort-wrapper">
+              <label for="sortSelect" class="visually-hidden">Sort transactions</label>
+              <select id="sortSelect" aria-label="Sort transactions">
+                <option value="newest">Newest First</option>
+                <option value="oldest">Oldest First</option>
+                <option value="highest">Highest Amount</option>
+                <option value="lowest">Lowest Amount</option>
+                <option value="category">Category A-Z</option>
+              </select>
+            </div>
+          </div>
+
+          <div id="transactionList" class="transaction-list"></div>
+
+          <div id="emptyState" class="empty-state">
+            No transactions yet. Start tracking your spending by adding your first transaction.
+          </div>
+        </section>
+
+      </div><!-- /col-right -->
+
+    </div><!-- /dashboard-grid -->
+  </main>
+
+  <!-- ========== FOOTER ========== -->
+  <footer>
+    <p class="watermark">ZafizDev_99</p>
+  </footer>
+
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- App Script -->
+  <script src="js/script.js"></script>
+
+</body>
+</html>
